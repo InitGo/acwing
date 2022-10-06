@@ -34,10 +34,11 @@ int find(int x)
     return p[x];
 }
 
-//求每个点u到其他点的路径上的最大边和次大边
+//求最小生成树上的每个点到其他点的路径上的最大边和次大边
+//u表示当前点，fa表示u的father点，
 void dfs(int u, int fa, int maxd1, int maxd2, int d1[], int d2[])
 {
-    d1[u] = maxd1, d2[u] = maxd2;
+    d1[u] = maxd1, d2[u] = maxd2;  //i->u的最大和次大
     for (int i = h[u]; ~i; i = ne[i])
     {
         int j = e[i];
@@ -89,14 +90,14 @@ int main()
         {
             int a = edge[i].a, b = edge[i].b, w = edge[i].w;
             LL t;
-            if (w > dist1[a][b])  //如果非树边大于最大边，可以直接替换
+            if (w > dist1[a][b])  //如果当前非树边大于最大边，可以直接替换
                 t = sum + w - dist1[a][b];
-            else if (w > dist2[a][b])  //如果非树边等于最大边，那么用最大边直接替换不符合严格次小生成树，所以用次大边替换
+            else if (w > dist2[a][b])  //如果当前非树边等于最大边，那么用最大边直接替换不符合严格次小生成树，所以用次大边替换
                 t = sum + w - dist2[a][b];
             res = min(res, t);
         }
 
-    printf("%lld\n", res);
+    cout << res << endl;
 
     return 0;
 }

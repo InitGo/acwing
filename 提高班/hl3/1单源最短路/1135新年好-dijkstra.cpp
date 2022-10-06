@@ -23,7 +23,7 @@ void add(int a, int b, int c)
 
 void dijkstra(int start, int dist[])
 {
-    memset(dist, 0x3f, N * 4);
+    memset(dist, 0x3f, N * 4);  //这里的size：绝对不能加sizeof ， N*4就是最终的Bytes Size
     dist[start] = 0;
     memset(st, 0, sizeof st);
 
