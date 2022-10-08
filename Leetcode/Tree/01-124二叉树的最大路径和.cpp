@@ -18,11 +18,12 @@ public:
         return ans;
     }
     
+    //返回以root为起点的最大单一路径和
     int dfs(TreeNode* root) {
         if (!root) return 0;
-        int left = max(0, dfs(root->left));
+        int left = max(0, dfs(root->left));  //左边不走 vs 左边走
         int right = max(0, dfs(root->right));
-        ans = max(ans, left + right + root->val);
+        ans = max(ans, left + right + root->val);  
         return max(left, right) + root->val;
     }
 };
