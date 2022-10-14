@@ -36,6 +36,7 @@ int find(int x)
 
 //求最小生成树上的每个点到其他点的路径上的最大边和次大边
 //u表示当前点，fa表示u的father点，
+//每个点到自己的路径上最大边和次大边都是-INF
 void dfs(int u, int fa, int maxd1, int maxd2, int d1[], int d2[])
 {
     d1[u] = maxd1, d2[u] = maxd2;  //i->u的最大和次大
@@ -45,6 +46,7 @@ void dfs(int u, int fa, int maxd1, int maxd2, int d1[], int d2[])
         if (j != fa)
         {
             //处理当前点u的各个出边：u->j
+            //因为是循环，其他轮迭代要继续用maxd1, maxd2,不能直接在这上面改动。用td存
             int td1 = maxd1, td2 = maxd2;  //没和w比较之前的最大边和次大边
             if (w[i] > td1) td2 = td1, td1 = w[i];  //同时更新最大和次大
             else if (w[i] < td1 && w[i] > td2) td2 = w[i];  //只更新次大
@@ -82,7 +84,7 @@ int main()
         }
     }
 
-    for (int i = 1; i <= n; i ++ ) dfs(i, -1, -1e9, -1e9, dist1[i], dist2[i]);  //最大边，次大边
+    for (int i = 1; i <= n; i ++ ) dfs(i, -1, -1e9, -1e9, dist1[i], dist2[i]);  //求树中两个结点之间的最大边，次大边
 
     LL res = 1e18;
     for (int i = 0; i < m; i ++ )

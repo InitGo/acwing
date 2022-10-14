@@ -20,7 +20,7 @@ public:
         auto dummy = new ListNode(-1);
         dummy->next = head;
 
-        //这次的起点是上一次翻转的终点
+        //这次的起点是上一次翻转的终点  精髓是这个！！！有了这个就有了一切。
         auto before_tail = dummy;
         for (int i = 0; i < len / k; i ++ ) {
             auto prev = before_tail->next, cur = prev->next;

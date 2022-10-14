@@ -43,6 +43,7 @@ int main()
     {
         //在第一层循环的位置更新答案
         //对于最大值是k的环的集合
+        //这里的循环很细节，i和j的范围都是在1~k-1里的
         for (int i = 1; i < k; i ++ )  //枚举起点i
             for (int j = i + 1; j < k; j ++ )  //枚举终点j
                 if ((long long)d[i][j] + g[j][k] + g[k][i] < res)  //如果这个环的边权之和小于res，则表明可以更新res 

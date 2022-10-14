@@ -36,21 +36,52 @@ int check()
 char get_min()
 {
     for (int i = 0; i < n; i ++ )
-        if (!st[i])
-        {
-            bool flag = true;  //假设i是最小值
-            for (int j = 0; j < n; j ++ )
-                if (!st[j] && d[j][i])  //存在j比i小
-                {
-                    flag = false;
-                    break;
-                }
-            if (flag)
+    {
+        if (st[i]) continue; //验证1：不能是打印过的
+        
+        //验证2：必须是最小值：入度为0
+        bool flag = true;  //假设i是最小值
+        for (int j = 0; j < n; j ++ )
+            if (!st[j] && d[j][i])  //存在j比i小
             {
-                st[i] = true;
-                return 'A' + i;
+                flag = false;
+                break;
             }
+        if (flag)
+        {
+            st[i] = true;
+            return 'A' + i;
         }
+    }   
+}
+
+void topsort()
+{
+    int din[N];
+    memset(din, 0, sizeof din);
+    for (int i = 0; i < n; i ++ )
+        for (int j = 0; j < n; j ++ )
+            if (d[i][j])
+                din[j] ++ ;
+    
+    int q[N], hh = 0, tt = -1;
+    for (int i = 0; i < n; i ++ )
+    {
+        if (din[i] == 0) q[ ++ tt] = i;
+    }
+    
+    while (hh <= tt) 
+    {
+        int t = q[hh ++ ];
+        for (int j = 0; j < n; j ++ )
+            if (d[t][j])
+            {
+                din[j] -- ;
+                if (din[j] == 0) q[ ++ tt] = j;
+            }
+    }
+    
+    for (int i = 0; i <= tt; i ++ ) cout << char('A' + q[i]) ;
 }
 
 int main()
@@ -81,6 +112,7 @@ int main()
             memset(st, 0, sizeof st);
             printf("Sorted sequence determined after %d relations: ", t);
             for (int i = 0; i < n; i ++ ) printf("%c", get_min());
+            //topsort();
             printf(".\n");
         }
     }
