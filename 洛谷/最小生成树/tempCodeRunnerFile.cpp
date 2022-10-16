@@ -6,13 +6,14 @@ const int N = 10010, M = 50010, INF = 0x3f3f3f3f;
 
 int n, m, q;
 int p[N];
-int h[N], e[N * 2], ne[N * 2], w[N * 2], idx;
+int h[N], e[M * 2], ne[M * 2], w[M * 2], idx;
 int fa[N][15], depth[N], dist[N][15];
-bool st[N];  
+bool st[N];
 
 struct Edge
 {
     int a, b, w;
+    bool is_tree;
     bool operator< (const Edge &t) const
     {
         return w > t.w;
@@ -30,19 +31,17 @@ int find(int x)
     return p[x];
 }
 
-void kruskal_build()
+void kruskal()
 {
     sort(edge, edge + m);
     for (int i = 1; i <= n; i ++ ) p[i] = i;
-
-    memset(h, -1, sizeof h);
+    
     for (int i = 0; i < m; i ++ )
     {
-        int a = edge[i].a, b = edge[i].b, w = edge[i].w;
-        int pa = find(a), pb = find(b);
+        int pa = find(edge[i].a), pb = find(edge[i].b);
         if (pa != pb)
         {
-            add(a, b, w), add(b, a, w);
+            edge[i].is_tree = true;
             p[pa] = pb;
         }
     }
@@ -50,16 +49,17 @@ void kruskal_build()
 
 void bfs() 
 {
-    //memset(dist, 0x3f, sizeof dist); 这里不初始化也能ac
+    memset(dist, 0x3f, sizeof dist);
 
     queue<int> q;
-    for (int i = 1; i <= n; i ++ )  //每个连通块都入队列，本题只把1入队列也ac
+    for (int i = 1; i <= n; i ++ )
     {
-        if (!st[find(i)])
+        int p = find(i);
+        if (!st[p])
         {
-            st[find(i)] = true;
-            depth[i] = 1;
-            q.push(i);
+            st[p] = true;
+            depth[p] = 1;
+            q.push(p);
         }
     }
 
@@ -89,10 +89,20 @@ void bfs()
     }
 }
 
+void build()
+{
+    memset(h, -1, sizeof h);
+    for (int i = 0; i < m; i ++ )
+        if (edge[i].is_tree)
+        {
+            int a = edge[i].a, b = edge[i].b, w = edge[i].w;
+            add(a, b, w), add(b, a, w);
+        }
+}
+
 int lca(int a, int b)
 {   
     if (find(a) != find(b)) return -1;
-    
     int ans = INF;
     if (depth[a] < depth[b]) swap(a, b);
     for (int k = 14; k >= 0; k -- )
@@ -105,7 +115,7 @@ int lca(int a, int b)
     {
         for (int k = 14; k >= 0; k -- )
         {
-            if (fa[a][k] != fa[b][k])  //注意这里第一段用depth，第二段直接用fa比
+            if (depth[fa[a][k]] != depth[fa[b][k]])
             {
                 ans = min(ans, dist[a][k]);
                 ans = min(ans, dist[b][k]);
@@ -129,9 +139,10 @@ int main()
         cin >> a >> b >> w;
         edge[i] = {a, b, w};
     }
-    
-    kruskal_build();
+
+    kruskal();
     bfs();
+    build();
 
     cin >> q;
     while (q -- )

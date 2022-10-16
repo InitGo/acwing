@@ -10,6 +10,6 @@ int main()
     {
 
 
-        printf("Case #%d: %d\n", C, res);
+        printf("Case #%d: %d\n", C, );
     }
 }

@@ -12,7 +12,8 @@ using namespace std;
 
 typedef pair<int, int> PII;
 
-const int N = 160, INF = 1e20;
+const int N = 160;
+const double INF = 1e20;
 int n;
 double dist[N][N];  //距离矩阵
 string g[N];  //存邻接表
