@@ -4,57 +4,45 @@
 class complex
 {
 public:
-    complex(double r = 0, double i = 0): re(r), im(i) {};
-    double real() const {return re;}
-    double imag() const {return im;}
-    complex& operator += (const complex x);
+    complex(double r = 0, double i = 0) : re(r), im(i) {}
+    
+    complex& operator+= (const complex& r);
+
+    double get_real() const {return re;}
+    double get_imag() const {return im;}
 
 private:
     double re, im;
 
-    friend complex& __doapl(complex*, const complex&);
+    friend complex& __doapl(complex *, const complex& r);
 };
 
-inline complex&
-__doapl(complex* ths, const complex& x)
+inline 
+complex& __doapl(complex* ths, const complex& r) 
 {
-    ths->re += x.re;
-    ths->im += x.im;
+    ths->re += r.re;
+    ths->im += r.im;
     return *ths;
 }
 
-inline complex&
-complex::operator += (const complex x)
+inline 
+complex& complex::operator+= (const complex& r)
 {
-    return __doapl(this, x);
+    return __doapl(this, r);
 }
 
-inline complex
-operator + (const complex& x, const complex& y)
+inline 
+complex operator+ (const complex& a, const complex& b)
 {
-    return complex(x.real() + y.real(), x.imag() + y.imag());
+    return complex(a.get_real() + b.get_real(), a.get_imag() + b.get_imag());
 }
 
-inline complex
-operator + (double x, const complex& y)
-{
-    return complex(x + y.real(), y.imag());
-}
-
-inline complex
-operator + (const complex& x, double y)
-{
-    return complex(x.real() + y, x.imag());
-}
-
-#include <iostream>
-
+#include<iostream>
 using namespace std;
-
-ostream& operator << (ostream& os, const complex x)
+inline 
+ostream& operator<< (ostream& os, const complex& r)
 {
-    os << '(' << x.real() << ',' << x.imag() << ')';
-    return os;
+    return os << '[' << r.get_real() << ',' << r.get_imag() << ']';
 }
 
 #endif

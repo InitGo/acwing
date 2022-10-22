@@ -9,7 +9,7 @@ int h[N], e[M], w[M], ne[M], idx;
 int dist[N];
 bool st[N];
 
-void add(int a, int b, int c) 
+void add(int a, int b, int c)
 {
     e[idx] = b; w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
 }
