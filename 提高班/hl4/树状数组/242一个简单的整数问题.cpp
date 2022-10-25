@@ -22,7 +22,7 @@ void add(int x, int c)
 LL sum(int x)
 {
     LL res = 0;
-    for (int i = x; i; i -= lowbit(i)) res += tr[i];
+    for (int i = x; i > 0; i -= lowbit(i)) res += tr[i];
     return res;
 }
 
