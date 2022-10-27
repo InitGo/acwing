@@ -17,11 +17,13 @@ struct Node
     ll sum, add;
 }tr[N * 4];
 
-void pushup(int u)  //pushup只更新非懒标记的属性
+//pushup操作：用子节点的信息更新父节点 只处理常规属性 
+void pushup(int u)  //pushup只更新非懒标记的属性 理解：懒标记表示当前区间更新过了，还没传到子区间，pushup操作不涉及从上到下，所以不需要管懒标记
 {
     tr[u].sum = tr[u << 1].sum + tr[u << 1 | 1].sum;
 }
 
+//pushdown操作：用父节点的信息更新子节点 同时处理懒标记和常规属性
 void pushdown(int u)
 {
     auto &root = tr[u], &left = tr[u << 1], &right = tr[u << 1 | 1];
@@ -36,6 +38,7 @@ void pushdown(int u)
     }
 }
 
+//只修改子节点，只pushup
 void build(int u, int l, int r)
 {
     if (l == r) tr[u] = {l, r, w[l], 0};
@@ -48,6 +51,7 @@ void build(int u, int l, int r)
     }
 }
 
+//又是往下递归：要pushdown下传懒标记 ， 又是修改子节点：要pushup更新父节点
 void modify(int u, int l, int r, int v)
 {
     if (tr[u].l >= l && tr[u].r <= r)
@@ -65,6 +69,8 @@ void modify(int u, int l, int r, int v)
     }
 }
 
+
+//只涉及向下递归：只要pushdown
 ll query(int u, int l, int r)
 {
     if (tr[u].l >= l && tr[u].r <= r) return tr[u].sum;

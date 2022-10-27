@@ -49,11 +49,27 @@ void modify(int u, int x, int v)  //修改x位置的值为v
     }
 }
 
+//为什么不能用这种方式？因为tmax是不符合区间加法的，不能直接这样分解区间比较大小，需要重新做出res节点
+// int query(int u, int l, int r)
+// {
+//     if (tr[u].l >= l && tr[u].r <= r) return tr[u].tmax;
+    
+//     int mid = tr[u].l + tr[u].r >> 1;
+//     long long ans = -1e18;
+//     if (l <= mid) ans = query(u << 1, l, r);
+//     if (r > mid) ans = max(ans, query(u << 1 | 1, l, r));
+//     return ans;
+// }
+
 Node query(int u, int l, int r) //区间查询
 {
     if (tr[u].l >= l && tr[u].r <= r) return tr[u];
     
     int mid = tr[u].l + tr[u].r >> 1;
+    //Node res, left_node, right_node;
+    //left_node = query(u << 1, left, right);  // 一定不能提前写，可能访问到未开辟的内存
+    //right_node = query(u << 1 | 1, left, right);  // 一定不能提前写，可能访问到未开辟的内存
+    
     if (r <= mid) return query(u << 1, l, r); //当前查询的区间只在左孩子区间
     else if (l > mid) return query(u << 1 | 1, l, r);  //当前查询的区间只在右孩子区间
     else  //当前查询的区间同时在左右孩子区间
