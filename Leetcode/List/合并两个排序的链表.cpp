@@ -27,7 +27,7 @@ public:
 
         //还剩下一个不为空的链表，接在尾节点cur之后
         if (l1) cur->next = l1; 
-        else cur->next = l2;
+        if (l2) cur->next = l2;
         return dummy->next;
     }
 };

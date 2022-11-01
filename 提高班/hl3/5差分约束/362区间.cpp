@@ -19,9 +19,10 @@ void spfa()
     memset(st, 0, sizeof st);
     memset(dist, -0x3f, sizeof dist);
     dist[0] = 0;
+    st[0] = true;
+
     queue<int> q;
     q.push(0);
-    st[0] = true;
     
     while (q.size())
     {

@@ -26,8 +26,8 @@ struct Node
     int l, r;
     //线段树[l,r]维护的是ys[r+1] ~ ys[l]的区间【重点】
     //换而言之，[l,l]的叶结点表示的区间是ys[l+1]~ys[l]
-    int cnt;  //当前区间被覆盖的总次数
-    double len;  //当前区间被覆盖的总长度
+    int cnt;  //当前区间被完全覆盖的总次数
+    double len;  //当前区间被部分覆盖的总长度
 }tr[N * 2 * 4];
 
 int find(double y)  //原始坐标-->离散化后的坐标
@@ -67,14 +67,14 @@ void modify(int u, int l, int r, int k)
     if (tr[u].l >= l && tr[u].r <= r)
     {
         tr[u].cnt += k;
-        pushup(u);  //为什么这里也需要pushup?
+        pushup(u);  //多了一步pushup操作 当前Node的cnt有变化，则也会影响当前Node的len，也会pushup
     }
     else
     {
-        int mid = tr[u].l + tr[u].r >> 1;  //modify中的mid为当前区间的中点，然后判断目标区间与当前区间的左右孩子区间的关系
+        int mid = tr[u].l + tr[u].r >> 1;
         if (l <= mid) modify(u << 1, l, r, k);
         if (r > mid) modify(u << 1 | 1, l, r, k);
-        pushup(u);
+        pushup(u);  //当前节点的children节点发生变化，会影响当前节点，pushup
     }
 }
 

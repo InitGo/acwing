@@ -16,7 +16,7 @@ public:
         dummy->next = head; //指向head
         
         auto a = dummy; 
-        for (int i = 0; i < left - 1; i ++ ) a = a->next; //a指向left一个点
+        for (int i = 0; i < left - 1; i ++ ) a = a->next; //a指向left前一个点
         
         auto pre = a->next, cur = pre->next; //pre指向left， cur指向left->next
         //从cur开始做反转，做right-left条边：

@@ -34,7 +34,7 @@ map和unordered_map有什么区别？
 数据库：用户端修改一个数据，到后台数据库修改，这个过程是怎样的？
 
 linux请求网页用什么命令？修改文件权限用什么？
-wget chmod
+wget/curl chmod
 
 code：二叉搜索树中两个节点的最近公共祖先？
 
