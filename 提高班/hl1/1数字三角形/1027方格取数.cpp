@@ -14,7 +14,7 @@ int main()
     cin >> n;
     
     int a, b, c;
-    while (cin >> a >> b >> c, a || b ||c) w[a][b] = c;
+    while (cin >> a >> b >> c, a || b || c) w[a][b] = c;
     
     for (int k = 2; k <= n + n; k ++ )
         for (int i1 = 1; i1 <= n; i1 ++ )

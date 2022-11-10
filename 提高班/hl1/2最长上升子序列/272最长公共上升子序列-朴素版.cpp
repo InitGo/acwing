@@ -18,15 +18,15 @@ int main()
     {
         for (int j = 1; j <= n; j ++ )
         {
-            f[i][j] = f[i - 1][j];
-            if (a[i] == b[j])
+            f[i][j] = f[i - 1][j];  //左半边子集合的答案：a[i]不取的的部分
+            if (a[i] == b[j])  //如果a[i]==b[j],a[i]可以取
             {
-                f[i][j] = max(f[i][j], 1); //空的情况
+                int maxv = 1; //右半边子集合的答案，a[i]取上
                 for (int k = 1; k < j; k ++ ) //k的情况
-                {
                     if (b[k] < b[j])
-                        f[i][j] = max(f[i][j], f[i - 1][k] + 1);
-                }
+                        maxv = max(maxv, f[i - 1][k] + 1);
+                
+                f[i][j] = max(f[i][j], maxv);
             }
         }
     }
@@ -34,7 +34,7 @@ int main()
     int res = 0;
     for (int i = 1; i <= n; i ++ ) res = max(res, f[n][i]);
     
-    cout << res  << endl;
+    cout << res << endl;
     
     return 0;
 }
