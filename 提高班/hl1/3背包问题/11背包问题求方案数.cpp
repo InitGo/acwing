@@ -33,8 +33,7 @@ int main()
     //先求出最大值
     int res = 0;
     for (int i = 1; i <= m; i ++ )
-        if (f[i] > res)
-            res = i;
+        res = max(res, f[i]);
 
     //再统计取得最大值的方案有多少个
     int sum = 0;

@@ -16,7 +16,7 @@ bool st[M];  //存储每种状态是否有奇数个连续的0，如果奇数个0
 
 //vector<int > state[M];  //二维数组记录合法的状态
 vector<vector<int>> state(M);  //两种写法等价:二维数组
-int m , n;
+int m, n;
 
 int main(){
 
@@ -26,7 +26,7 @@ int main(){
         //对于每种状态，先预处理每列不能有奇数个连续的0
         for(int i=0; i< 1<<n; i++){ //i表示状态
 
-            int cnt =0 ;//记录连续0的个数
+            int cnt = 0 ;//记录连续0的个数
 
             bool isValid = true; // 某种状态没有奇数个连续的0则标记为true
 

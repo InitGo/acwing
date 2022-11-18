@@ -8,7 +8,7 @@ const int N = 11, M = 16;
 int n, m;
 int w[N][M];
 int f[N][M];
-int way[N];
+int machine[N];
 
 int main()
 {
@@ -32,12 +32,12 @@ int main()
         for (int k = 0; k <= j; k ++ ) //枚举决策 这里选0和选k可以合并【一般情况下不能合并】
             if (f[i][j] == f[i - 1][j - k] + w[i][k]) //转移
             {
-                way[i] = k; //记录第i组物品选了第k个，从前往后输出，这里用数组记录
+                machine[i] = k; //记录第i组物品选了第k个，从前往后输出，这里用数组记录
                 j -= k; //减去第k个的体积
                 break; //第i组的方案已经查到了，break
             }
 
-    for (int i = 1; i <= n; i ++ ) cout << i << ' ' << way[i] << endl; //输出
+    for (int i = 1; i <= n; i ++ ) cout << i << ' ' << machine[i] << endl; //输出
 
     return 0;
 }

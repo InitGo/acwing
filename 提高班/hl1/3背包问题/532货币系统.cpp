@@ -4,11 +4,10 @@
 
 using namespace std;
 
-const int N = 25010;
+const int N = 110, M = 25010;
 
 int n;
-int a[N];
-bool f[N];
+int a[N], f[M];
 
 int main()
 {
@@ -17,24 +16,24 @@ int main()
     while (T -- )
     {
         cin >> n;
-        for (int i = 0; i < n; i ++ ) cin >> a[i];
-        sort(a, a + n);
+        for (int i = 1; i <= n; i ++ ) cin >> a[i];
+        sort(a + 1, a + 1 + n);  //一定要先排序，让小的数先被处理
 
         //只需统计所有物品的体积是否能被其他的线性表出
         //因此背包的体积只需设置为最大的物品体积即可
-        int m = a[n - 1];
         memset(f, 0, sizeof f); //多组测试，要初始化
-        f[0] = true; //前0选，体积恰好0，有方案，true
+        f[0] = 1; //前0选，体积恰好0，有方案，true
 
-        int cnt = 0;
-        for (int i = 0; i < n; i ++ )
+        int cnt = n;
+        for (int i = 1; i <= n; i ++ )
         {
-            if (!f[a[i]]) cnt ++ ; //如果a[i]不能被前面的数表示，cnt ++
-            //从小到大，先查看当前数有没有被筛掉，
-            //1)如果没有就把它加入到最大无关向量组中，并把他以及他和此前的硬币的线性组合都筛掉
-            //2)如果有就不理会
-            for (int j = a[i]; j <= m; j ++ ) //做一遍完全背包
-                f[j] += f[j - a[i]];
+            if (f[a[i]]) cnt -- ; //如果a[i]能被前面的数表示，cnt --
+            else  //否则，用当前数更新：表示的数的方案
+            {
+                for (int j = a[i]; j <= 25000; j ++ ) //做一遍完全背包
+                    f[j] += f[j - a[i]];
+            }
+            
         }
 
         cout << cnt << endl;

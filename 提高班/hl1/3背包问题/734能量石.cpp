@@ -9,9 +9,9 @@ int n;
 struct Stone
 {
     int s, e, l;
-    bool operator< (const Stone &x) const
+    bool operator< (const Stone &t) const
     {
-        return s * x.l < x.s * l;
+        return s * t.l < t.s * l;
     }
 }stones[N];
 

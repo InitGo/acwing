@@ -49,7 +49,6 @@ int spfa()
             }
         }
     }
-
     return dist[n];
 }
 
