@@ -18,7 +18,7 @@ string a[N], b[N];
 //扩展？ 扩展队列！取出队头string t，应用规则，找到队头t走一步可以走到哪些状态，扩展queue
 //参数：要扩展的队列是哪个， 当前队列的dist数组，另一个队列的dist数组， 目标是要把字符串a转化成字符串b
 //返回本次扩展的结果：如果扩展过程中会师了，就返回距离，没有会师，就返回非法值，表示本次扩展暂时无解
-int extend(queue<string>& q, unordered_map<string, int>&da, unordered_map<string, int>& db, 
+int extend(queue<string>& q, unordered_map<string, int>& da, unordered_map<string, int>& db, 
     string a[N], string b[N])
 {
     int d = da[q.front()];  //每次应该扩展一层：把所有和当前队列的队首元素在同一层的点全部扩展出来：同一层的距离相等，用距离判断

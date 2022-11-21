@@ -13,8 +13,8 @@ vector<int> head[M];
 bool check(int state)
 {
     for (int i = 0; i < n; i ++ )
-    if ((state >> i & 1) && (state >> i + 1 & 1)) //第i位是1 && 第i+1位是1
-        return false;
+        if ((state >> i & 1) && (state >> i + 1 & 1)) //第i位是1 && 第i+1位是1
+            return false;
     return true;
 }
 
