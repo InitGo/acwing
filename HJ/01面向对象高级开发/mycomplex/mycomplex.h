@@ -1,74 +1,58 @@
-#ifndef MYCOMPLEX
-#define MYCOMPLEX
+#ifndef COMPLEX
+#define COMPLEX
 
 class complex
 {
 public:
-    //构造函数
-    complex(double r = 0, double i = 0): re(r), im(i) { } //为什么ctor不需要const来传？ 也可以，开销一样
-    //成员函数
-    complex& operator += (const complex&); //为什么这里不需要写形参？ 只是prototype
-    double real() const{return re;}
-    double imag() const{return im;}
+    complex(double r = 0, double i = 0) : re(r), im(i) {}
+    complex& operator+= (const complex& r);
+
+    double get_real() const {return re;}
+    double get_imag() const {return im;}
 
 private:
     double re, im;
-
-    friend complex& __doapl(complex *,const complex& );
+    friend complex& __doapl(complex* ths, const complex& r);
 };
 
-inline complex&
-__doapl(complex* ths, const complex& r)
+inline
+complex& __doapl(complex* ths, const complex& r)
 {
     ths->re += r.re;
     ths->im += r.im;
     return *ths;
 }
 
-inline complex&
-complex::operator+= (const complex& r)
+inline
+complex& complex::operator+=(const complex& r)
 {
     return __doapl(this, r);
 }
 
-//也可以把它定义成global function
-inline double
-real (const complex& x)
+inline
+complex operator+ (const complex& x, const complex& y)
 {
-    return x.real();
+    return complex(x.get_real() + y.get_real(), x.get_imag() + y.get_imag());
 }
 
-inline double
-imag (const complex& x)
+inline
+complex operator+ (const double x, const complex& y)
 {
-    return x.imag();
+    return complex(x + y.get_real(), y.get_imag());
 }
 
-inline complex
-operator + (const complex& x, const complex& y)
+inline
+complex operator+ (const complex& x, const double y)
 {
-    return complex(x.real() + real(y), imag(x) + imag(y));
+    return complex(x.get_real() + y, x.get_imag());
 }
 
-inline complex
-operator + (const complex& x, double y)
-{
-    return complex(real(x) + y, imag(x));
-}
-
-inline complex
-operator + (double x, const complex& y)
-{
-    return complex(x + real(y), imag(y));
-}
-
-#include<iostream>
+#include <iostream>
 using namespace std;
-ostream&
-operator << (ostream& os, const complex& x)
+ostream& operator<<(ostream& os, const complex& r)
 {
-    return os << '(' << real(x) << ',' << imag(x) << ')';
+    os << '[' << r.get_real() << ',' << r.get_imag() << ']';
+    return os;
 }
-
 
 #endif

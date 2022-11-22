@@ -1,14 +1,15 @@
-#ifndef MYSTRING
-#define MYSTRING
+#ifndef STRING
+#define STRING
 
 #include <cstring>
+using namespace std;
 
 class String
 {
 public:
-    String(const char* c_str = 0);
+    String(const char* cstr);
     String(const String& str);
-    String& operator = (const String& str);
+    String& operator=(const String& str);
     ~String();
     char* get_c_str() const {return m_data;}
 private:
@@ -16,12 +17,12 @@ private:
 };
 
 inline 
-String::String(const char* c_str)
+String::String(const char* cstr)
 {
-    if (c_str)
+    if (cstr)
     {
-        m_data = new char[strlen(c_str) + 1];
-        strcpy(m_data, c_str); //不需要return？ 所谓构造函数就是给object里的data赋值
+        m_data = new char[strlen(cstr) + 1];
+        strcpy(m_data, cstr);
     }
     else
     {
@@ -36,19 +37,20 @@ String::~String()
     delete[] m_data;
 }
 
-inline
+inline 
 String::String(const String& str)
 {
     m_data = new char[strlen(str.m_data) + 1];
     strcpy(m_data, str.m_data);
 }
 
-inline String&
-String::operator=(const String& str)
-{
-    if (this->m_data == str.m_data) //有不同
-    return *this;
 
+inline 
+String& String::operator=(const String& str)
+{
+    if (this == &str)
+        return *this;
+    
     delete[] m_data;
     m_data = new char[strlen(str.m_data) + 1];
     strcpy(m_data, str.m_data);
@@ -58,10 +60,10 @@ String::operator=(const String& str)
 #include <iostream>
 using namespace std;
 
-ostream&
-operator << (ostream& os, const String& str)
+ostream& operator<<(ostream& os, const String& str)
 {
-    return os << str.get_c_str();
+    os << str.get_c_str();
+    return os;
 }
 
 #endif

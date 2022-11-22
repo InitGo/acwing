@@ -1,5 +1,5 @@
 #include <iostream>
-#include "mycomplex_exercise.h"
+#include "mycomplex.h"
 
 using namespace std;
 
