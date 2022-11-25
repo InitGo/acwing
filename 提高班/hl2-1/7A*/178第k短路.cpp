@@ -52,7 +52,7 @@ int astar()
     if (dist[S] == 0x3f3f3f3f) return -1;  //特判一下S和T是否连通，如果不连通，没有最短路
     
     priority_queue<PIII, vector<PIII>, greater<PIII>> heap;
-    heap.push({dist[S] + 0, {0, S}});
+    heap.push({dist[S] + 0, {0, S}});  //{估价距离 + 真实距离，{真实距离，点的编号}}
     
     int cnt = 0;
     while (heap.size())
@@ -60,15 +60,15 @@ int astar()
         auto t = heap.top();
         heap.pop();
         
-        int ver = t.second.second, distance = t.second.first;
+        int ver = t.second.second, distance = t.second.first;  //ver是点的编号，distance是ver点到T的真实距离
         
-        if (ver == T) cnt ++ ;
-        if (cnt == K) return distance;
+        if (ver == T) cnt ++ ;  //如果ver点是T了，T第cnt次出队，distance是第cnt短路
+        if (cnt == K) return distance;  //如果已经求到了第K短路，直接返回distance
         
-        for (int i = h[ver]; ~i; i = ne[i])
+        for (int i = h[ver]; ~i; i = ne[i])  //扩展
         {
             int j = e[i];
-            heap.push({dist[j] + distance + w[i], {distance + w[i], j}});
+            heap.push({dist[j] + distance + w[i], {distance + w[i], j}});  //估价距离是dist[j]， 真实距离是distance + w[i]
         }
     }
     return -1;

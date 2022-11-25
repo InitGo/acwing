@@ -91,7 +91,7 @@ string bfs(string start)
 
 int main()
 {
-    string g, c, seq;  //g存初始状态序列，seq存没有x的序列
+    string g, c, seq;  //g存初始状态序列，seq存没有x的序列,seq只用来计算逆序对
     while (cin >> c)
     {
         g += c;
