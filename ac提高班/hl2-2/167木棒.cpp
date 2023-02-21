@@ -17,7 +17,7 @@ bool dfs(int u, int cur, int start)
     if (u * length == sum) return true; //如果大木数量u*length等于总长度，找到一组合法解 return true
     if (cur == length) return dfs(u + 1, 0, 0); //当前大木的长度达标，要开新的大木
 
-    //枚举每个小木
+    //枚举每个小木，目的是把当前大木装满
     for (int i = start; i < n; i ++ ) //剪枝3-1:i从start开始
     {
         if (st[i]) continue; 

@@ -74,7 +74,7 @@ bool dfs(int cnt)
     for (int i = 0; i < N; i++) //遍历state中可以使用的数字
     {
         if (!(state >> i & 1))
-            continue; //第i为不为1，不可以用，continue
+            continue; //第i位不为1，不可以用，continue
         draw(x, y, i, true);
         if (dfs(cnt - 1))
             return true; //如果找到一组方案， 直接返回
