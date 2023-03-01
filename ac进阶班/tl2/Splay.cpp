@@ -63,12 +63,14 @@ void splay(int x, int k)  //核心函数splay，将x转到k下面
 
 void insert(int v)  //插入节点
 {
-    int u = root, p = 0;
-    while (u) p = u, u = tr[u].s[v > tr[u].v];
-    u = ++ idx;
-    if (p) tr[p].s[v > tr[p].v] = u;
-    tr[u].init(v, p);
-    splay(u, 0);
+    int u = root, p = 0; //从根节点u开始找，p是u的parent节点
+    while (u) p = u, u = tr[u].s[v > tr[u].v];  //如果u存在，则p = u, u = tr[u].s[v > tr[u].v]; 如果当前点v大于tr[u].v，则当前点应该插入到u的右子树
+    
+    //找到了v应该插入的位置，构建这个点的信息
+    u = ++ idx;  //分配一个位置
+    if (p) tr[p].s[v > tr[p].v] = u;  //p->u
+    tr[u].init(v, p);  //u->p
+    splay(u, 0);  //完成插入/查询操作后，将目标点旋到根节点
 }
 
 int get_k(int k)  //找第k个节点:中序遍历下的第k个节点：slay只维护中序遍历，不一定是和value有关

@@ -5,7 +5,7 @@ why linkers?
 - modularity ：方便build标准库
 - effeciency ：更改一个小module m，只重新编译m，再执行linking
 
-waht do linkers do?
+what do linkers do?
 - step1: symbol resolution :对**global** variables/functions进行符号解析,linkers只能看到symbols，不能看到variables/functions
 - step2: relocation ：merge modules
 
