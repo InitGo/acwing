@@ -2,36 +2,67 @@
 
 using namespace std;
 
-const int N = 1010;
+const int N = 200010;
 
-int h[N], e[N], ne[N], idx;
-string name[N];
-vector<string> ans;
+int n;
+int st[N], ed[N];
+int a[N], b[N];
+vector<pair<int, int>> stars;
+vector<int> ys;
 
-void add(int a, int b, string& namea, string& nameb)
+void add(int l, int r)
 {
-    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;
-    name[a] = namea, name[b] = nameb;
+    b[l] += 1;
+    b[r + 1] -= 1;
 }
 
-void get_name(int u, int pa) 
+int find(int y)
 {
-    int cnt = 0;
-    for (int i = h[u]; i != -1; i = ne[i])
-    {
-        int j = e[i];
-        if (j != pa) 
-        {
-            cnt ++ ;
-            get_name(j, u);
-        }
-    }
-    if (cnt > 1) ans.push_back(name[u]);
+    return lower_bound(ys.begin(), ys.end(), y) - ys.begin() + 1;
 }
 
 int main()
 {
-    memset(h, -1, sizeof h);
+    cin >> n;
+    for (int i = 0; i < n; i ++ )
+    {
+        cin >> st[i];
+        ys.push_back(st[i]);
+    }
+
+    for (int i = 0; i < n; i ++ )
+    {
+        cin >> ed[i];
+        ys.push_back(ed[i]);
+    }
+
+    sort(ys.begin(), ys.end());
+    ys.erase(unique(ys.begin(), ys.end()), ys.end());
+    int cnt = ys.size();
+
+
+    for (int i = 0; i < n; i ++ )
+    {
+        int l = find(st[i]), r = find(ed[i]);
+        add(l, r);
+    }
+
+    for (int i = 1; i <= cnt; i ++ ) a[i] = a[i - 1] + b[i];
+
+    int maxn = 0;
+    for (int i = 1; i <= cnt; i ++ )
+        maxn = max(maxn, a[i]);
     
-    get_name(1, -1);
+    int ans = 0;
+    vector<int> beauty;
+    for (int i = 1; i <= cnt; i ++ )
+        if (a[i] == maxn)
+        {
+            beauty.push_back(ys[i - 1]);
+        }
+
+    
+
+    cout << maxn << ' ' << ans << endl;
+    return 0;
 }
